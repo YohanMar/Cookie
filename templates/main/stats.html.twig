@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+        {% endblock %}
+
+        {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha512-vBmx0N/uQOXznm/Nbkp7h0P1RfLSj0HQrFSzV8m7rOGyj30fYAOKHYvCNez+yM8IrfnW0TCodDEjRqf6fodf/Q==" crossorigin="anonymous"></script>
+        {% endblock %}
+
+{% block title %}Bienvenue sur votre Gestionnaire Cookie Nation !{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
+  <a class="navbar-brand" href="">Cookie Nation</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button> 
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ path('app_stats') }}">Gestion des ventes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ path('admin') }}">Administration</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Profil</a>
+      </li>
+      <li class="nav-item">
+      <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+      </li>
+    </ul>
+</nav>
+<div class="container mb-1">
+    <h1>Statistiques de ventes des Utilisateurs</h1>
+    <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="doughnut-chart" width="500" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+     </div>     
+</div>
+    <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="line-chart" width="800" height="450"></canvas>
+                </div>
+            </div>
+        </div>
+     </div>
+     <div class="container mt-5">
+    <h1>Statistiques de ventes par catégorie de Cookie</h1>  
+     <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
+                </div>
+            </div>
+        </div>
+     </div>             
+        
+</div>
+{% block javascriptss %}
+<script>
+    new Chart(document.getElementById("doughnut-chart"), {
+    type: 'doughnut',
+    data: {
+      labels: ["MARTIN Yohan", "GERARD Pierre", "ALAIN Dimitri", "VILLEMAIN Anne", "MBAPPE Kyllian"],
+      datasets: [
+        {
+          label: "Nombre de ventes par Utilisateurs",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: [2478,5267,734,784,433]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Nombre de ventes par Utilisateurs'
+      }
+    }
+});
+
+new Chart(document.getElementById("line-chart"), {
+  type: 'line',
+  data: {
+    labels: ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"],
+    datasets: [{ 
+        data: [3000,3200,2800,1500,1600,1000,1000,2500,4000,4200],
+        label: "MARTIN",
+        borderColor: "#3e95cd",
+        fill: false
+      }, { 
+        data: [2000,1200,1600,2000,3000,2000,2000,1500,3500,3700],
+        label: "GERARD",
+        borderColor: "#8e5ea2",
+        fill: false
+      }, { 
+        data: [500,700,1000,1000,2000,1600,900,500,0,0],
+        label: "ALAIN",
+        borderColor: "#3cba9f",
+        fill: false
+      }, { 
+        data: [40,20,10,16,24,38,74,167,508,784],
+        label: "VILLEMAIN",
+        borderColor: "#e8c3b9",
+        fill: false
+      }, { 
+        data: [6,3,2,2,7,26,82,172,312,433],
+        label: "MBAPPE",
+        borderColor: "#c45850",
+        fill: false
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'Nombres de ventes par mois'
+    }
+  }
+});
+
+new Chart(document.getElementById("bar-chart-horizontal"), {
+    type: 'horizontalBar',
+    data: {
+      labels: ["Chocolat au lait", "Chocolat blanc", "Tout choco", "Chocolat noir", "Kinder Bueno", "Oreo", "Mirtille",],
+      datasets: [
+        {
+          label: "Population (millions)",
+          backgroundColor: ["#997029", "#fffff0","#754a00","#4a2f00","#c45850",,"#780054"],
+          data: [6000,900,3000,1600,4555,2955,500]
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Ventes par types de Cookies'
+      }
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}
